@@ -1,1 +1,1 @@
-[![message_svg](https://raw.githubusercontent.com/joonhyung-lee/joonhyung-lee/main/chat.svg)]
+[![](https://github.com/joonhyung-lee/joonhyung-lee/blob/master/chat.svg)](https://twitter.com/joonhyunglee99)
