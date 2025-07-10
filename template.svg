@@ -226,10 +226,10 @@
 
   </g>
 
-  <!-- Hi, I'm Sigrid Jin -->
+  <!-- Hi, I'm Joon -->
   <g transform="translate(10, 0)" class="msg-1 bubble">
-    <rect width="159" height="42" rx="18.0355" />
-    <text x="15" y="27">Hi, I'm Sigrid Jin</text>
+    <rect width="133" height="42" rx="18.0355" />
+    <text x="15" y="27">Hi, I'm Joon</text>
   </g>
 
   <!-- typing 2 -->
@@ -250,11 +250,11 @@
 
   </g>
 
-  <!-- From Columbus... -->
+  <!-- From Seoul... -->
   <g transform="translate(10, 48)" class="msg-2">
-    <rect width="425" height="66.1302" rx="18.0355" class="bubble" />
-    <text x="15" y="27">I am from Seoul, Korea where it’s supposed to be</text>
-    <text x="15" y="50">{degF}° F ({degC}° C) and <tspan class="emoji">{weatherEmoji}</tspan> today.</text>
+    <rect width="400" height="66.1302" rx="18.0355" class="bubble" />
+    <text x="15" y="27">I live in Seoul, South Korea, where the forecast</text>
+    <text x="15" y="50">says it’ll be {degC}° C(<tspan class="emoji">{weatherEmoji}</tspan>) today.</text>
   </g>
 
   <!-- typing 3 -->
@@ -275,11 +275,11 @@
 
   </g>
 
-  <!-- Work ... -->
+  <!-- My goal ... -->
   <g transform="translate(10, 120)" class="msg-3">
-    <rect width="459" height="66.1302" rx="18.0355" class="bubble" />
-    <text x="15" y="27">I’m eager to challenge new things!</text>
-    <text x="15" y="50">Now extensively learning ZK and LLM fields.</text>
+    <rect width="460" height="66.1302" rx="18.0355" class="bubble" />
+    <text x="15" y="27">My goal is to make robots easier to use in daily life,</text>
+    <text x="15" y="50">and I’ve received my M.S. and B.S. at <a xlink:href="https://www.korea.edu/sites/en/index.do">Korea University</a>.</text>
   </g>
 
   <!-- typing 4 -->
@@ -302,10 +302,12 @@
 
   <!-- Twitter -->
   <g transform="translate(10, 192)" class="msg-4">
-    <rect width="415" height="42" rx="18.0355" class="bubble" />
+    <rect width="200" height="42" rx="18.0355" class="bubble" />
     <text x="15" y="27">
-      Find me on
-      <a xlink:href="https://twitter.com/sigridjin_eth">https://twitter.com/sigridjin_eth</a>
+      You can find me 
+      <a xlink:href="https://joonhyung-lee.github.io/">
+        here!
+      </a>
     </text>
   </g>
 
@@ -329,7 +331,8 @@
 
   <!-- Thanks -->
   <g transform="translate(10, 240)" class="msg-5">
-    <rect width="255" height="66.13" rx="18.0355" class="bubble" />
-    <text x="15" y="47">Have a great {todayDay}! <tspan class="emoji">👋</tspan></text>
+    <rect width="248" height="66.13" rx="18.0355" class="bubble" />
+    <text x="15" y="27">Thanks for stopping by</text>
+    <text x="15" y="47">and have a great {todayDay}! <tspan class="emoji">👋</tspan></text>
   </g>
 </svg>
