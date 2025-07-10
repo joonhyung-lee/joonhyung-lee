@@ -1,97 +1,63 @@
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY
 
-import fs from 'fs'
-import got from 'got'
-import Qty from 'js-quantities/esm'
-import { formatDistance } from 'date-fns'
-
-let WEATHER_DOMAIN = 'http://dataservice.accuweather.com'
+let fs = require('fs')
+let formatDistance = require('date-fns/formatDistance')
+let weather = require('openweather-apis')
+let qty = require('js-quantities')
 
 const emojis = {
-  1: '☀️',
-  2: '☀️',
-  3: '🌤',
-  4: '🌤',
-  5: '🌤',
-  6: '🌥',
-  7: '☁️',
-  8: '☁️',
-  11: '🌫',
-  12: '🌧',
-  13: '🌦',
-  14: '🌦',
-  15: '⛈',
-  16: '⛈',
-  17: '🌦',
-  18: '🌧',
-  19: '🌨',
-  20: '🌨',
-  21: '🌨',
-  22: '❄️',
-  23: '❄️',
-  24: '🌧',
-  25: '🌧',
-  26: '🌧',
-  29: '🌧',
-  30: '🥵',
-  31: '🥶',
-  32: '💨',
-}
-
-// Cheap, janky way to have variable bubble width
-const dayBubbleWidths = {
-  Monday: 235,
-  Tuesday: 235,
-  Wednesday: 260,
-  Thursday: 245,
-  Friday: 220,
-  Saturday: 245,
-  Sunday: 230,
+  '01d': '☀️',
+  '02d': '⛅️',
+  '03d': '☁️',
+  '04d': '☁️',
+  '09d': '🌧',
+  '10d': '🌦',
+  '11d': '🌩',
+  '13d': '❄️',
+  '50d': '🌫'
 }
 
 // Time working at PlanetScale
-const today = new Date()
-const todayDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(
-  today
-)
+function convertTZ(date, tzString) {
+    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("en-US", {timeZone: tzString}));   
+}
+const today = convertTZ(new Date(), "Asia/Seoul");
+const todayDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(today);
 
 const psTime = formatDistance(new Date(2020, 12, 14), today, {
-  addSuffix: false,
+  addSuffix: false
 })
 
 // Today's weather
-const locationKey = '18363_PC'
-let url = `forecasts/v1/daily/1day/${locationKey}?apikey=${WEATHER_API_KEY}`
+weather.setLang('en')
+weather.setCoordinate(37.517235, 127.047325)
+weather.setUnits('imperial')
+weather.setAPPID(WEATHER_API_KEY)
 
-got(url, { prefixUrl: WEATHER_DOMAIN })
-  .then((response) => {
-    let json = JSON.parse(response.body)
+weather.getWeatherOneCall(function (err, data) {
+  if (err) console.log(err)
 
-    const degF = Math.round(json.DailyForecasts[0].Temperature.Maximum.Value)
-    const degC = Math.round(Qty(`${degF} tempF`).to('tempC').scalar)
-    const icon = json.DailyForecasts[0].Day.Icon
+  const degF = Math.round(data.daily[0].temp.max)
+  const degC = Math.round(qty(`${degF} tempF`).to('tempC').scalar)
+  const icon = data.daily[0].weather[0].icon
 
-    fs.readFile('template.svg', 'utf-8', (error, data) => {
-      if (error) {
+  fs.readFile('template.svg', 'utf-8', (error, data) => {
+    if (error) {
+      console.error(error)
+      return
+    }
+
+    data = data.replace('{degF}', degF)
+    data = data.replace('{degC}', degC)
+    data = data.replace('{weatherEmoji}', emojis[icon])
+    data = data.replace('{psTime}', psTime)
+    data = data.replace('{todayDay}', todayDay)
+
+    data = fs.writeFile('chat.svg', data, (err) => {
+      if (err) {
+        console.error(err)
         return
       }
-
-      data = data.replace('{degF}', degF)
-      data = data.replace('{degC}', degC)
-      data = data.replace('{weatherEmoji}', emojis[icon])
-      data = data.replace('{psTime}', psTime)
-      data = data.replace('{todayDay}', todayDay)
-      data = data.replace('{dayBubbleWidth}', dayBubbleWidths[todayDay])
-
-      data = fs.writeFile('chat.svg', data, (err) => {
-        if (err) {
-          console.error(err)
-          return
-        }
-      })
     })
   })
-  .catch((err) => {
-    // TODO: something better
-    console.log(err)
-  })
+})
