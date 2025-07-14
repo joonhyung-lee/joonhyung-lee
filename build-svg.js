@@ -1,4 +1,5 @@
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY
+console.log('API KEY:', process.env.WEATHER_API_KEY);
 
 import fs from 'fs'
 import got from 'got'
