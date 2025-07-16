@@ -7,34 +7,24 @@ import Qty from 'js-quantities/esm'
 import { formatDistance } from 'date-fns'
 
 const emojis = {
-  1: '☀️',
-  2: '☀️',
-  3: '🌤',
-  4: '🌤',
-  5: '🌤',
-  6: '🌥',
-  7: '☁️',
-  8: '☁️',
-  11: '🌫',
-  12: '🌧',
-  13: '🌦',
-  14: '🌦',
-  15: '⛈',
-  16: '⛈',
-  17: '🌦',
-  18: '🌧',
-  19: '🌨',
-  20: '🌨',
-  21: '🌨',
-  22: '❄️',
-  23: '❄️',
-  24: '🌧',
-  25: '🌧',
-  26: '🌧',
-  29: '🌧',
-  30: '🥵',
-  31: '🥶',
-  32: '💨',
+  '01d': '☀️',
+  '01n': '🌙',
+  '02d': '⛅️',
+  '02n': '☁️',
+  '03d': '☁️',
+  '03n': '☁️',
+  '04d': '☁️',
+  '04n': '☁️',
+  '09d': '🌧',
+  '09n': '🌧',
+  '10d': '🌦',
+  '10n': '🌧',
+  '11d': '🌩',
+  '11n': '🌩',
+  '13d': '❄️',
+  '13n': '❄️',
+  '50d': '🌫',
+  '50n': '🌫'
 }
 
 // Cheap, janky way to have variable bubble width
@@ -84,7 +74,7 @@ got(url)
       data = data.replace('{psTime}', psTime)
       data = data.replace('{todayDay}', todayDay)
       data = data.replace('{dayBubbleWidth}', dayBubbleWidths[todayDay])
-
+      console.log(weatherEmoji)
       fs.writeFile('chat.svg', data, (err) => {
         if (err) {
           console.error(err)
