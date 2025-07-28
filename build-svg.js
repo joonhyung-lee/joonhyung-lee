@@ -39,12 +39,12 @@ const dayBubbleWidths = {
 }
 
 // Time working at PlanetScale
-const today = new Date()
-const todayDay = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(today)
+const today = new Date();
+const todayDay = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: 'Asia/Seoul' }).format(today);
 
 const psTime = formatDistance(new Date(2020, 12, 14), today, {
   addSuffix: false,
-})
+});
 
 // Today's weather (OpenWeatherMap)
 const city = 'Seoul'
