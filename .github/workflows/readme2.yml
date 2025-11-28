@@ -10,27 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm install
+          cache: npm
 
-      - name: Generate readme
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate chat.svg
         env:
           WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          CHAT_SVG_PATH: dist/chat.svg
         run: node build-svg.js
 
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v4
+      - name: Publish chat.svg to assets branch
+        uses: crazy-max/ghaction-github-pages@v2.1.3
         with:
-          author_name: Joonhyung Lee
-          author_email: dlwnsgud8823@korea.ac.kr
-          message: "Auto updating my readme"
-          add: "*.svg"
+          target_branch: assets
+          build_dir: dist
+          keep_history: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Check git status
-        run: git status

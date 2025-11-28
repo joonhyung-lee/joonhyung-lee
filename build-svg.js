@@ -2,9 +2,12 @@ const WEATHER_API_KEY = process.env.WEATHER_API_KEY
 console.log('API KEY:', process.env.WEATHER_API_KEY);
 
 import fs from 'fs'
+import path from 'path'
 import got from 'got'
 import Qty from 'js-quantities/esm'
 import { formatDistance } from 'date-fns'
+
+const outputPath = process.env.CHAT_SVG_PATH || 'chat.svg'
 
 const emojis = {
   '01d': '☀️',
@@ -75,7 +78,13 @@ got(url)
       data = data.replace('{todayDay}', todayDay)
       data = data.replace('{dayBubbleWidth}', dayBubbleWidths[todayDay])
       console.log(weatherEmoji)
-      fs.writeFile('chat.svg', data, (err) => {
+      const outputDir = path.dirname(outputPath)
+
+      if (outputDir && outputDir !== '.') {
+        fs.mkdirSync(outputDir, { recursive: true })
+      }
+
+      fs.writeFile(outputPath, data, (err) => {
         if (err) {
           console.error(err)
           return
